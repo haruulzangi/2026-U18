@@ -1,5 +1,7 @@
 # Haruul Zangi U18 - 2026
 
+![CTFd hero_selection](screenshots/hero_selection.png)
+![CTFd challenges](screenshots/challenges.png)
 ![CTFd scoreboard](screenshots/scoreboard.png)
 
 > Special thanks to @n0wsh for creating the awesome [CTFd Marvel-Rivals theme](https://github.com/n0wsh/CTFd-Marvel-Rivals-Theme).
