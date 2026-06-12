@@ -1,0 +1,15 @@
+*.md
+Makefile
+.git
+.gitignore
+__pycache__
+*.pyc
+.DS_Store
+*.log
+*.bak
+Dockerfile
+.dockerignore
+docker-compose*.yml
+bit
+bit.dbg
+src/*.o

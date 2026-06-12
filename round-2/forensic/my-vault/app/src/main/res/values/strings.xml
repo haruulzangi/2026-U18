@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyVault</string>
+    <string name="idle_title">Vault is locked</string>
+    <string name="idle_message">Tap the button below to fetch your encrypted flag and store it on this device.</string>
+    <string name="loading_message">Performing handshake and decrypting your flag…</string>
+    <string name="error_title">Couldn\'t load flag</string>
+    <string name="retry">Try again</string>
+    <string name="load_flag">Load flag</string>
+    <string name="loading_flag">Loading…</string>
+    <string name="flag_saved">Vault active</string>
+    <string name="flag_saved_message">Flag is securely saved on your device.</string>
+    <string name="flag_load_error">Flag load failed: %1$s</string>
+    <string name="developer_mode_button">Developer mode enabled</string>
+    <string name="developer_mode_message">Developer mode is enabled. Flag fetch disabled.</string>
+    <string name="adb_enabled_button">ADB enabled</string>
+    <string name="adb_enabled_message">ADB debugging is enabled. Flag fetch disabled.</string>
+    <string name="root_detected_button">Root detected</string>
+    <string name="root_detected_message">Rooted device detected. Flag fetch disabled.</string>
+    <string name="device_not_secure_button">Device not secure</string>
+    <string name="device_not_secure_message">Your device is not secure, therefore flag cannot be issued.</string>
+</resources>

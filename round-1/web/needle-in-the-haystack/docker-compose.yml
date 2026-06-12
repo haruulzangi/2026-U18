@@ -1,0 +1,27 @@
+services:
+  needle-in-the-haystack:
+    image: ghcr.io/haruulzangi/2026-u18-private/needle-in-the-haystack:latest
+    networks: [traefik_proxy]
+    restart: always
+    environment:
+      FLAG: ${FLAG:-HZU18{w3lc0m3_$1_t0_d3vt00lz_$2}}
+    read_only: true
+    mem_limit: 64m
+    cpus: 0.25
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.needle-in-the-haystack-http.entrypoints=web
+      - traefik.http.routers.needle-in-the-haystack-http.rule=Host(`needle-in-the-haystack.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.needle-in-the-haystack-http.middlewares=needle-in-the-haystack-https
+      - traefik.http.middlewares.needle-in-the-haystack-https.redirectscheme.scheme=https
+      - traefik.http.routers.needle-in-the-haystack.entrypoints=websecure
+      - traefik.http.routers.needle-in-the-haystack.rule=Host(`needle-in-the-haystack.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.needle-in-the-haystack.loadbalancer.server.port=3000
+      - traefik.http.routers.needle-in-the-haystack.tls=true
+      - traefik.http.routers.needle-in-the-haystack.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

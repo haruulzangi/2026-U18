@@ -1,0 +1,51 @@
+services:
+  moritoi_geng:
+    image: ghcr.io/haruulzangi/2026-u18-private/moritoi_geng:latest
+    container_name: moritoi_geng
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+
+    environment:
+      FLAG: ${FLAG:-HZU18{mori_uraldahch_saihanda_7f2d1e83}}
+
+    read_only: true
+    tmpfs:
+      - /tmp
+
+    mem_limit: 128m
+    cpus: 0.5
+
+    security_opt:
+      - no-new-privileges:true
+
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+
+      # HTTP → HTTPS redirect
+      - traefik.http.routers.moritoi-geng-http.entrypoints=web
+      - traefik.http.routers.moritoi-geng-http.rule=Host(`moritoi-geng.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.moritoi-geng-http.middlewares=moritoi-geng-https
+      - traefik.http.middlewares.moritoi-geng-https.redirectscheme.scheme=https
+
+      # Main Web UI (port 8080)
+      - traefik.http.routers.moritoi-geng.entrypoints=websecure
+      - traefik.http.routers.moritoi-geng.rule=Host(`moritoi-geng.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.moritoi-geng.tls=true
+      - traefik.http.routers.moritoi-geng.tls.certresolver=myresolver
+      - traefik.http.routers.moritoi-geng.service=moritoi-geng-web
+      - traefik.http.services.moritoi-geng-web.loadbalancer.server.port=8080
+
+      # WebSocket (port 4448, path /ws)
+      - traefik.http.routers.moritoi-geng-ws.entrypoints=websecure
+      - traefik.http.routers.moritoi-geng-ws.rule=Host(`moritoi-geng.u18-2026.haruulzangi.mn`) && PathPrefix(`/ws`)
+      - traefik.http.routers.moritoi-geng-ws.priority=100
+      - traefik.http.routers.moritoi-geng-ws.tls=true
+      - traefik.http.routers.moritoi-geng-ws.tls.certresolver=myresolver
+      - traefik.http.routers.moritoi-geng-ws.service=moritoi-geng-ws
+      - traefik.http.services.moritoi-geng-ws.loadbalancer.server.port=4448
+
+networks:
+  traefik_proxy:
+    external: true

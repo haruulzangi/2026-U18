@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+  <h1>Register</h1>
+  <form method="post" class="card">
+    <label>Username
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>Full name
+      <input name="full_name">
+    </label>
+    <label>Password
+      <input type="password" name="password" autocomplete="new-password" required>
+    </label>
+    <button type="submit" class="btn">Create account</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,27 @@
+name: Bichver Loader
+author: '[ByamB4](https://github.com/ByamB4)'
+category: reverse
+description: |
+  A tiny keyboard profile loader from a school lab PC survived, but its sync phrase does not.
+
+  Recover the correct phrase and restore the hidden profile output.
+
+  Flag format: `HZU18{...}`
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/bichver_loader.zip
+
+flags:
+  - type: static
+    content: HZU18{wrong_layout_right_phrase_c9f6c4c7c8c54952}
+
+tags:
+  - medium
+  - crackme
+  - reversing

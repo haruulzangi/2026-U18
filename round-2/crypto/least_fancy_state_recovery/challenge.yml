@@ -1,0 +1,15 @@
+name: 'Least Fancy State Recovery'
+category: crypto
+description: ''
+files:
+  - challenge/challenge.py
+flags:
+  - type: static
+    content: 'HZU18{eda38881f7142743384cdf2278204f3e7a}'
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+state: hidden

@@ -1,0 +1,30 @@
+services:
+  my-vault:
+    image: ghcr.io/haruulzangi/2026-u18-private/my-vault:latest
+    networks: [traefik_proxy]
+    restart: always
+    environment:
+      FLAG_TEMPLATE: "HZU18{$$fingerprint:my_v@u1t_1s_s3cur3}"
+      UNSAFE_DISABLE_DEVICE_SAFETY_CHECKS: "1"
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 64m
+    cpus: 0.25
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.my-vault-http.entrypoints=web
+      - traefik.http.routers.my-vault-http.rule=Host(`my-vault.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.my-vault-http.middlewares=my-vault-https
+      - traefik.http.middlewares.my-vault-https.redirectscheme.scheme=https
+      - traefik.http.routers.my-vault.entrypoints=websecure
+      - traefik.http.routers.my-vault.rule=Host(`my-vault.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.my-vault.loadbalancer.server.port=3000
+      - traefik.http.routers.my-vault.tls=true
+      - traefik.http.routers.my-vault.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

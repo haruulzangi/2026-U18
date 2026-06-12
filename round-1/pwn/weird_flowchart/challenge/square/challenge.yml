@@ -1,0 +1,15 @@
+name: "Weird FlowChart: Square Of N"
+author: ganbold13
+category: pwn
+connection_info: https://weird-flowchart.u18-2026.haruulzangi.mn
+description: |
+  N × N
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - HZU18{Gadg3ts_and_Calling_conv3nt10n}

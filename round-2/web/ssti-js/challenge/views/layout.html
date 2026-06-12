@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Welcome{% endblock %}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0a0e17;
+      color: #c9d1d9;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    h1 {
+      color: #58a6ff;
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 1.6rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #8b949e;
+      margin-bottom: 28px;
+      font-size: 0.9rem;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #c9d1d9;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #c9d1d9;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #58a6ff;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #2ea043; }
+    .btn-danger {
+      background: #da3633;
+    }
+    .btn-danger:hover { background: #f85149; }
+    .error {
+      background: #3d1214;
+      border: 1px solid #f85149;
+      color: #f85149;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 18px;
+      font-size: 0.85rem;
+    }
+    .link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.85rem;
+    }
+    .link a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    .link a:hover { text-decoration: underline; }
+    .greeting {
+      font-size: 1.8rem;
+      color: #58a6ff;
+      text-align: center;
+      margin: 20px 0;
+      word-break: break-word;
+    }
+    .info-box {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #8b949e;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

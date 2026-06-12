@@ -1,0 +1,35 @@
+services:
+  web:
+    image: ghcr.io/haruulzangi/2026-u18-private/path-traversal:latest
+    networks:
+      - internal
+    restart: always
+    expose:
+      - "3001"
+
+  nginx:
+    image: ghcr.io/haruulzangi/2026-u18-private/path-traversal-nginx:latest
+    networks:
+      - traefik_proxy
+      - internal
+    restart: always
+    depends_on:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.path-traversal-http.entrypoints=web
+      - traefik.http.routers.path-traversal-http.rule=Host(`path-traversal.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.path-traversal-http.middlewares=path-traversal-https
+      - traefik.http.middlewares.path-traversal-https.redirectscheme.scheme=https
+      - traefik.http.routers.path-traversal.entrypoints=websecure
+      - traefik.http.routers.path-traversal.rule=Host(`path-traversal.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.path-traversal.tls=true
+      - traefik.http.routers.path-traversal.tls.certresolver=myresolver
+      - traefik.http.services.path-traversal.loadbalancer.server.port=80
+
+networks:
+  traefik_proxy:
+    external: true
+  internal:
+    internal: true

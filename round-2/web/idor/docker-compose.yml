@@ -1,0 +1,31 @@
+services:
+  idor:
+    image: ghcr.io/haruulzangi/2026-u18-private/idor:latest
+    networks:
+      - traefik_proxy
+    restart: always
+    environment:
+      FLAG: HZU18{1d0r_1s_d4ng3r0us_4lw4ys_ch3ck_4uth}
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 128m
+    cpus: 0.5
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.idor-http.entrypoints=web
+      - traefik.http.routers.idor-http.rule=Host(`idor.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.idor-http.middlewares=idor-https
+      - traefik.http.middlewares.idor-https.redirectscheme.scheme=https
+      - traefik.http.routers.idor.entrypoints=websecure
+      - traefik.http.routers.idor.rule=Host(`idor.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.idor.tls=true
+      - traefik.http.routers.idor.tls.certresolver=myresolver
+      - traefik.http.services.idor.loadbalancer.server.port=3003
+
+networks:
+  traefik_proxy:
+    external: true

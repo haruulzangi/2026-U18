@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Customer Portal</h1>
+            <p>Welcome, <%= user.name %></p>
+        </div>
+        
+        <div class="nav">
+            <div class="user-info">
+                <div class="user-avatar"><%= user.username.charAt(0).toUpperCase() %></div>
+                <span><%= user.username %></span>
+                <span class="badge <%= user.isAdmin ? 'badge-admin' : 'badge-user' %>">
+                    <%= user.isAdmin ? 'Admin' : 'Employee' %>
+                </span>
+            </div>
+            <a href="/logout" class="btn-danger">Logout</a>
+        </div>
+        
+        <div class="main-content">
+            <div class="profile-card">
+                <h3>Your Profile</h3>
+                <p><strong>Name:</strong> <%= user.name %></p>
+                <p><strong>Email:</strong> <%= user.email %></p>
+                <p><strong>Department:</strong> <%= user.department %></p>
+                <p><strong>Salary:</strong> $<%= user.salary.toLocaleString() %></p>
+                <p><strong>User ID:</strong> <%= user.id %></p>
+            </div>
+            
+            <div class="invoice-section">
+                <h3>View Invoice</h3>
+                <input type="number" id="invoiceId" placeholder="Invoice ID">
+                <button onclick="viewInvoice()">View Invoice</button>
+                <div id="invoiceResult"></div>
+            </div>
+            
+            <div class="user-section">
+                <h3>View Employee</h3>
+                <input type="number" id="userId" placeholder="User ID">
+                <button onclick="viewUser()">View Employee</button>
+                <div id="userResult"></div>
+            </div>
+            
+            <% if (user.isAdmin) { %>
+            <div class="info-box">
+                <h3>Admin Access</h3>
+                <p><a href="/api/admin/flag" target="_blank">Get Flag</a></p>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    
+    <script>
+        async function viewInvoice() {
+            const id = document.getElementById('invoiceId').value;
+            const res = await fetch(`/api/invoice/${id}`);
+            const data = await res.json();
+            
+            const resultDiv = document.getElementById('invoiceResult');
+            if (data.id) {
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <p><strong>Invoice #${data.id}</strong></p>
+                        <p>Amount: $${data.amount}</p>
+                        <p>Description: ${data.description}</p>
+                        <p>Date: ${data.date}</p>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `<div class="error">${data.error || 'Not found'}</div>`;
+            }
+        }
+        
+        async function viewUser() {
+            const id = document.getElementById('userId').value;
+            const res = await fetch(`/api/user/${id}`);
+            const data = await res.json();
+            
+            const resultDiv = document.getElementById('userResult');
+            if (data.id) {
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <p><strong>${data.name}</strong> (${data.username})</p>
+                        <p>Email: ${data.email}</p>
+                        <p>Department: ${data.department}</p>
+                        <p>Salary: $${data.salary?.toLocaleString()}</p>
+                        <p>Admin: ${data.isAdmin ? 'Yes' : 'No'}</p>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `<div class="error">${data.error || 'Not found'}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

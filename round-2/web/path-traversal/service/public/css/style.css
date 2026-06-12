@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.breadcrumb {
+  background: #f5f5f5;
+  padding: 12px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 13px;
+  color: #666;
+}
+
+.breadcrumb a {
+  color: #667eea;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.file-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 30px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.file-item:hover {
+  background: #f9f9f9;
+}
+
+.file-item.directory:hover {
+  background: #f0f7ff;
+}
+
+.file-icon {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.file-name {
+  flex: 1;
+  color: #333;
+  font-weight: 500;
+}
+
+.file-item.directory .file-name {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.file-size {
+  color: #999;
+  font-size: 12px;
+  width: 80px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.file-type {
+  color: #bbb;
+  font-size: 11px;
+  width: 100px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  padding: 60px 30px;
+  text-align: center;
+  color: #999;
+}
+
+.empty-state svg {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  opacity: 0.3;
+}
+
+.info-box {
+  background: #f0f7ff;
+  border-left: 4px solid #667eea;
+  padding: 15px 20px;
+  margin: 20px 30px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+}
+
+.info-box strong {
+  color: #667eea;
+}
+
+.footer {
+  background: #f5f5f5;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  border-top: 1px solid #e0e0e0;
+}

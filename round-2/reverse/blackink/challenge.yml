@@ -1,0 +1,22 @@
+name: Black ink
+category: reverse
+description: |
+  Black ink in your area.
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/challenge.exe
+
+flags:
+  - type: static
+    content: HZU18{P4TCH_WORKED?}
+
+tags:
+  - reversing
+
+state: hidden

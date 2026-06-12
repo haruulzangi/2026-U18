@@ -1,0 +1,21 @@
+{
+  "id": "my_challenge",
+  "title": "Display name shown in the dropdown",
+  "prompt": "Multi-line prompt shown to the kid.\n\nLine breaks work.\n\nGive hints about which gadgets to use.",
+
+  "initState": {
+    "registers": { "rdi": "7", "rax": "0x2A" },
+    "rodata":    { "0x402000": "HELLO", "0x402100": "WORLD" },
+    "stdin":     "line1\nline2\n"
+  },
+
+  "expectedOutput": "HELLO\n",
+  "flag": "flag{your_flag_here}",
+
+  "stepBudget": 1000,
+
+  "allowedGadgets": [
+    "pop_rdi",
+    "call_puts"
+  ]
+}

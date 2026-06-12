@@ -1,0 +1,24 @@
+name: Double reverse
+category: reverse
+description: |
+  Let's play the game or let's cheat?
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/chall.zip
+
+flags:
+  - type: static
+    content: HZU18{CHEAT_OR_GET_BETTER_!!}
+
+tags:
+  - reversing
+  - unity game
+
+state: hidden
+  

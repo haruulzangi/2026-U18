@@ -1,0 +1,36 @@
+{
+  "id": "isEqual",
+  "title": "isEquals ",
+  "prompt": "Stdin has two integers separated by whitespace. If they're equal, print exactly:\n\n  true\n\n",
+  "initState": {
+    "stdin": "3 3\n"
+  },
+  "expectedOutput": "true\n",
+  "testCases": [
+    { "stdin": "3 3\n",       "expectedOutput": "true\n" },
+    { "stdin": "0 0\n",       "expectedOutput": "true\n" },
+    { "stdin": "100 100\n",   "expectedOutput": "true\n" },
+    { "stdin": "-7 -7\n",     "expectedOutput": "true\n" },
+    { "stdin": "4 5\n",       "forbiddenOutput": "true\n" },
+    { "stdin": "5 4\n",       "forbiddenOutput": "true\n" },
+    { "stdin": "1 2\n",       "forbiddenOutput": "true\n" },
+    { "stdin": "100 50\n",    "forbiddenOutput": "true\n" },
+    { "stdin": "-3 3\n",      "forbiddenOutput": "true\n" }
+  ],
+  "flag": "HZU18{str1ngs_ar3_w31rd_r1ght?}",
+  "stepBudget": 2000,
+  "allowedGadgets": [
+    "pop_rdi",
+    "pop_rsi",
+    "pop_rdx",
+    "store_rdi_rsi",
+    "load_rax_rdi",
+    "call_scanf",
+    "mov_rsi_rax",
+    "mov_rdi_rax",
+    "mov_rax_rsi",
+    "sub_rax_rdi",
+    "add_rax_rdi",
+    "call_puts"
+  ]
+}

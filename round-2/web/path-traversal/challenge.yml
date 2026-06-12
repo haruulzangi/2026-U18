@@ -1,0 +1,20 @@
+name: Path Traversal
+author: "[Ebo](https://github.com/Ebo)"
+category: web
+connection_info: https://path-traversal.u18-2026.haruulzangi.mn
+description: ''
+attribution: Authored by [Ebo](https://github.com/enhbold)
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{ng1nx_4l14s_0p3ns_h1dd3n_p4ths}
+
+tags:
+  - medium
+state: hidden

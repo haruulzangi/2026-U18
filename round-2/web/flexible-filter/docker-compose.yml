@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: vulnapp
+      POSTGRES_USER: vulnuser
+      POSTGRES_PASSWORD: vulnpass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vulnuser -d vulnapp"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - internal
+
+  web:
+    image: ghcr.io/haruulzangi/2026-u18-private/flexible-filter:latest
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://vulnuser:vulnpass@db:5432/vulnapp
+      PYTHONPATH: /app
+    networks:
+      - traefik_proxy
+      - internal
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.flexible-filter-http.entrypoints=web
+      - traefik.http.routers.flexible-filter-http.rule=Host(`flexible-filter.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.flexible-filter-http.middlewares=flexible-filter-https
+      - traefik.http.middlewares.flexible-filter-https.redirectscheme.scheme=https
+      - traefik.http.routers.flexible-filter.entrypoints=websecure
+      - traefik.http.routers.flexible-filter.rule=Host(`flexible-filter.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.flexible-filter.tls=true
+      - traefik.http.routers.flexible-filter.tls.certresolver=myresolver
+      - traefik.http.services.flexible-filter.loadbalancer.server.port=3001
+
+volumes:
+  postgres_data:
+
+networks:
+  traefik_proxy:
+    external: true
+  internal:
+    internal: true

@@ -1,0 +1,23 @@
+name: Хаврын Араншин
+author: '[Tulgaaaa](https://github.com/Tulgaaaaaaaa)'
+category: crypto
+connection_info: "https://havriin-aranshin.u18-2026.haruulzangi.mn"
+description: |
+  Хавар ч хачин хачин юм их болох юмдаа хаха хамгийн хэцүү нь надаа лав салхи л байна та нарт харин ямар байна даа ?
+
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{havarch_salhi_ihtei_getsun_bainado_haha_e4c2d24a}
+
+tags:
+  - easy
+  - crypto
+
+state: hidden

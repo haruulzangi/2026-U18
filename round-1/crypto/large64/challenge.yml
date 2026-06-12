@@ -1,0 +1,13 @@
+name: Large64
+category: crypto
+description: 'Flag: `HZU18{what_you_found}`'
+files:
+  - challenge/cipher.7z
+flags:
+  - type: static
+    content: 'HZU18{St3g64}'
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100

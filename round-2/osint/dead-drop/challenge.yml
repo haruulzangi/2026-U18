@@ -1,0 +1,27 @@
+name: Find the dead drop
+category: osint
+
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+description: |
+  Манай мэдээлэгч сураггүй болохоосоо өмнө энэ зургийг үлдээсэн. Тэр хэлэхдээ:
+
+  "Хаа нэгтээ нуусан байгаа. Зөвхөн өдрийн гэрэлд л сүүлчийнх нь харагдана"
+
+  Flag format: HZU18{...}
+
+files:
+  - files/informant.png
+
+flags:
+  - type: static
+    content: HZU18{shadows_speak_at_dawn}
+
+topics:
+  - osint
+
+state: hidden

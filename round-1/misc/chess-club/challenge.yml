@@ -1,0 +1,13 @@
+name: Chess Club
+category: misc
+description: ''
+files:
+  - challenge/game.pgn
+flags:
+  - type: static
+    content: 'HZU18{3vErY_mA5t3R_wAS_oNCE_A_B3g1NNer}'
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100

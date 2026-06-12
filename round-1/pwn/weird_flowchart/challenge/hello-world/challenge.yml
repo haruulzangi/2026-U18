@@ -1,0 +1,17 @@
+name: "Weird FlowChart: Hello World!"
+author: ganbold13
+category: pwn
+connection_info: https://weird-flowchart.u18-2026.haruulzangi.mn
+description: |
+  A "Hello, world" program is usually a simple computer program that displays on the screen (often the console) a message similar to "Hello, World!".
+  A small piece of code in most general-purpose programming languages, this program is used to illustrate a language's basic syntax. 
+  Such a program is often the first written by a student of a new programming language, but it can also be used as a sanity check to ensure that the computer software intended to compile or run source code is correctly installed, and that its operator understands how to use it.
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - HZU18{w3lc0m3_t0_y0ur_F1rst_We1rd_programm1ng}

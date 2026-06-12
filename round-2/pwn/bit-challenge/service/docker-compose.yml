@@ -1,0 +1,44 @@
+services:
+  bit-challenge:
+    build: .
+    image: ghcr.io/haruulzangi/2026-u18-private/bit-challenge:latest
+    container_name: bit-challenge
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+
+    environment:
+      FLAG: ${FLAG:-HZU18{1_b1t_t0_t34r_them_4ll}}
+
+    # Hardening
+    read_only: true
+    tmpfs:
+      # `exec` lets run.py drop the patched copy of the binary into /tmp
+      # and execve it; `nosuid,nodev` keep that surface tight. /tmp is
+      # also where /flag lives (symlinked from the read-only rootfs).
+      - /tmp:exec,size=64m,mode=1777,nosuid,nodev
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+    pids_limit: 64
+    mem_limit: 256m
+    memswap_limit: 256m
+    cpus: "0.5"
+
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+
+      # TCP-over-TLS via SNI — players connect with
+      #   ncat --ssl bit-challenge.u18-2026.haruulzangi.mn 1337
+      - traefik.tcp.routers.bit-challenge.entrypoints=tcp1337
+      - traefik.tcp.routers.bit-challenge.rule=HostSNI(`bit-challenge.u18-2026.haruulzangi.mn`)
+      - traefik.tcp.routers.bit-challenge.tls=true
+      - traefik.tcp.routers.bit-challenge.tls.certresolver=myresolver
+      - traefik.tcp.services.bit-challenge.loadbalancer.server.port=1337
+
+networks:
+  traefik_proxy:
+    external: true

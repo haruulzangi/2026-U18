@@ -1,0 +1,26 @@
+name: Tengri
+category: web
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+description: |
+  Try our new os 
+
+flags:
+  - type: static
+    content: HZU18{t3ngr1_m0r1n_sql1_d4vkh4r}
+  - type: static
+    content: HZU18{bl1nd_x55_m0ng0l_t4l1in_n4r}
+  - type: static
+    content: HZU18{cmd_1nj3ct_kh4n_t3ngr1_0rd0n}
+
+connection_info: https://tengri.u18-2026.haruulzangi.mn
+
+state: hidden
+version: "0.1"
+tags:
+  - web

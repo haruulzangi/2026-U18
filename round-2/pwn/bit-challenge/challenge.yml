@@ -1,0 +1,28 @@
+name: bit challenge
+author: ganbold13
+category: pwn
+connection_info: "ncat --ssl bit-challenge.u18-2026.haruulzangi.mn 1337"
+description: |
+  ```
+    .:: 1   b i t ::.
+  ```
+
+  one bit. anywhere you like.
+  then the program runs.
+
+  the smallest cut of all. is it enough?
+type: dynamic
+
+files:
+  - dist/bit-challenge.tar.gz
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{1_b1t_t0_t34r_them_4ll}
+
+state: hidden

@@ -1,0 +1,32 @@
+services:
+  tengri:
+    image: ghcr.io/haruulzangi/2026-u18-private/tengri-os:latest
+    networks: [traefik_proxy]
+    restart: always
+    environment:
+      PORT: 3000
+      BOT_BASE: https://tengri.u18-2026.haruulzangi.mn
+      FLAG1: HZU18{t3ngr1_m0r1n_sql1_d4vkh4r}
+      FLAG2: HZU18{bl1nd_x55_m0ng0l_t4l1in_n4r}
+      FLAG3: HZU18{cmd_1nj3ct_kh4n_t3ngr1_0rd0n}
+    read_only: true
+    mem_limit: 64m
+    cpus: 0.25
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.tengri-http.entrypoints=web
+      - traefik.http.routers.tengri-http.rule=Host(`tengri.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.tengri-http.middlewares=tengri-https
+      - traefik.http.middlewares.tengri-https.redirectscheme.scheme=https
+      - traefik.http.routers.tengri.entrypoints=websecure
+      - traefik.http.routers.tengri.rule=Host(`tengri.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.tengri.loadbalancer.server.port=3000
+      - traefik.http.routers.tengri.tls=true
+      - traefik.http.routers.tengri.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

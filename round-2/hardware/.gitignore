@@ -1,0 +1,5 @@
+# EIM config
+eim_config.toml
+# Build artifacts
+build/
+

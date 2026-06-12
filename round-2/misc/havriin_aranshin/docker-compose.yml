@@ -1,0 +1,29 @@
+services:
+  aranshin:
+    image: ghcr.io/haruulzangi/2026-u18-private/havriin_aranshin:latest
+    build: ./challenge
+    container_name: aranshin
+    networks: [traefik_proxy]
+    restart: unless-stopped
+    environment:
+      FLAG: ${FLAG:-HZU18{havarch_salhi_ihtei_getsun_bainado_haha_e4c2d24a}}
+    read_only: true
+    mem_limit: 128m
+    cpus: 0.5
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.havriin-aranshin-http.entrypoints=web
+      - traefik.http.routers.havriin-aranshin-http.rule=Host(`havriin-aranshin.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.havriin-aranshin-http.middlewares=havriin-aranshin-https
+      - traefik.http.middlewares.havriin-aranshin-https.redirectscheme.scheme=https
+      - traefik.http.routers.havriin-aranshin.entrypoints=websecure
+      - traefik.http.routers.havriin-aranshin.rule=Host(`havriin-aranshin.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.havriin-aranshin.loadbalancer.server.port=8080
+      - traefik.http.routers.havriin-aranshin.tls=true
+      - traefik.http.routers.havriin-aranshin.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

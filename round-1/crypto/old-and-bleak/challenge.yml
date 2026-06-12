@@ -1,0 +1,27 @@
+name: Old and Bleak
+category: crypto
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+connection_info: https://old-and-bleak.u18-2026.haruulzangi.mn
+flags:
+  - type: regex
+    content: '^HZU18\{0ld_[A-Za-z0-9_\-]{11}_4nd_bl34k_[A-Za-z0-9_\-]{11}\}$'
+topics:
+  - rsa
+  - ciphertext
+  - web
+tags:
+  - rsa
+  - pkcs1v15
+  - frontend
+description: |
+  The Bureau of Lost Correspondence has restored its antient and bleak apparatus.
+  Three dispatches may be solicited from the wire:
+  - `GET /public-key` obtains the bureau's publick key
+  - `GET /get-flag` retrieves the sealed dispatch as base64 ciphertext
+  - `POST /check-flag` presents a ciphertext for judgement
+  The bureau's cipherwork is RSA with PKCS#1 v1.5 padding.
+  Proceed with the decorum befitting a message older than the wires that carry it. The type is wood; the cipher is cold.

@@ -1,0 +1,22 @@
+name: Needle in the haystack
+author: flame
+category: web
+connection_info: https://needle-in-the-haystack.u18-2026.haruulzangi.mn
+description: |
+  Sometimes the best hiding spot is in plain sight… or is it in the cipher?
+
+  A simple web app. The flag is there, but you need to decrypt it unless?…
+attribution: Authored by [flame](https://github.com/zolbooo)
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: regex
+    content: ^HZU18{w3lc0m3_[A-Za-z\d\-_]+_t0_d3vt00lz_[A-Za-z\d\-_]+}$
+
+tags:
+  - easy

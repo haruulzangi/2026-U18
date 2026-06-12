@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile - Employee Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👤 My Profile</h1>
+            <p>View and manage your personal information</p>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/profile" style="font-weight: bold; color: #764ba2;">Profile</a>
+                <% if (user.isAdmin) { %>
+                <a href="/admin">Admin Panel</a>
+                <% } %>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <%= user.username.charAt(0).toUpperCase() %>
+                </div>
+                <span><%= user.username %></span>
+                <span class="badge <%= user.isAdmin ? 'badge-admin' : 'badge-user' %>">
+                    <%= user.isAdmin ? 'Administrator' : 'Employee' %>
+                </span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div id="alert" class="alert alert-success"></div>
+            
+            <div class="profile-card">
+                <h3 style="margin-bottom: 20px; color: #667eea;">📋 Personal Information</h3>
+                <p><strong>User ID:</strong> <span><%= user._id %></span></p>
+                <p><strong>Username:</strong> <span><%= user.username %></span></p>
+                <p><strong>Email:</strong> <span id="email"><%= user.email || 'Not set' %></span></p>
+                <p><strong>Department:</strong> <span id="dept"><%= user.department || 'Not assigned' %></span></p>
+                <p><strong>Role:</strong> <span id="role"><%= user.role || 'user' %></span></p>
+                <p><strong>Admin Status:</strong> <span id="isAdmin"><%= user.isAdmin ? 'Yes' : 'No' %></span></p>
+                <p><strong>Theme:</strong> <span id="theme"><%= user.preferences ? user.preferences.theme : 'light' %></span></p>
+                <p><strong>Notifications:</strong> <span><%= user.preferences ? (user.preferences.notifications ? 'Enabled' : 'Disabled') : 'Enabled' %></span></p>
+                <p><strong>Profile Views:</strong> <span><%= user.profileViews || 0 %></span></p>
+            </div>
+            
+            <div class="edit-section">
+                <h3>✏️ Edit Profile</h3>
+                <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                    Update your contact information
+                </p>
+                <input type="email" id="emailInput" placeholder="Email Address" value="<%= user.email || '' %>">
+                <input type="text" id="deptInput" placeholder="Department" value="<%= user.department || '' %>">
+                <input type="text" id="themeInput" placeholder="Theme (light/dark)" value="<%= user.preferences ? user.preferences.theme : 'light' %>">
+                
+                <!-- Hidden field for debugging (DO NOT ENABLE IN PRODUCTION) -->
+                <!-- <input type="checkbox" id="isAdminCheckbox" value="true"> Admin -->
+                
+                <button onclick="updateProfile()">💾 Save Changes</button>
+            </div>
+            
+            <div class="info-box">
+                <p>🔒 <strong>Security:</strong> Your data is encrypted at rest.</p>
+                <p>💡 <strong>Note:</strong> Role changes require administrator approval.</p>
+                <p>🛡️ <strong>Last Login:</strong> <%= new Date().toLocaleString() %></p>
+            </div>
+            
+            <button onclick="logout()" class="btn-danger" style="width: 100%; margin-top: 20px;">🚪 Logout</button>
+        </div>
+    </div>
+    
+    <script>
+        async function updateProfile() {
+            const email = document.getElementById('emailInput').value;
+            const department = document.getElementById('deptInput').value;
+            const theme = document.getElementById('themeInput').value;
+            
+            const data = {
+                email: email,
+                department: department,
+                preferences: {
+                    theme: theme
+                }
+            };
+            
+            try {
+                const res = await fetch('/profile/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await res.json();
+                
+                if (result.success) {
+                    showAlert('Profile updated successfully!', 'success');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert('Error updating profile: ' + (result.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function logout() {
+            await fetch('/auth/logout');
+            window.location.href = '/';
+        }
+        
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert alert-${type === 'success' ? 'success' : 'error'}`;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+        
+        console.log('%c🔍 API Endpoints:', 'color: #00ff00; font-size: 12px;');
+        console.log('POST /profile/update - Update user profile');
+        console.log('GET /profile/me - Get current user data');
+        console.log('GET /admin/flag - Get system flag (admin only)');
+    </script>
+</body>
+</html>

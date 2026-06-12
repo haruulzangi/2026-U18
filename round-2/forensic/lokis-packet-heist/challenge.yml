@@ -1,0 +1,23 @@
+name: Loki's packet heist
+category: forensic
+
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: "HZU18{l0k1_th3_m1scH3v10us_672DEE07F9D3AFC62588CCD2631EDCF22E8CCC1FB35B501}"
+  - type: static
+    content: "HZU18{l0k1_th3_m1scH3v10us}"
+topics:
+  - networking
+  - tcp
+description: |
+    S.H.I.E.L.D. intercepted a suspicious PCAP capturing covert data exfiltration by a rogue variant of Loki; inspired by a real-world-style cyberattack attributed to “Team Europe,” you join Nick Fury’s forensic unit to analyze the traffic, uncover hidden or fragmented communications, and extract the embedded flag before the attacker vanishes across realities.
+files:
+  - lokis-packet-heist.pcap
+
+state: hidden

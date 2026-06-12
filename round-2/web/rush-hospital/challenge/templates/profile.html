@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block body %}
+  {% if viewed_other %}
+    {% if user.dev_token %}
+      <h1>Administrator Console</h1>
+      <p class="muted">Read-only view of the system administrator account. <a href="{{ url_for('profile', view=session.username) }}">back to my profile</a></p>
+    {% else %}
+      <h1>Profile of {{ user.full_name or user.username }}</h1>
+      <p class="muted">Read-only view. <a href="{{ url_for('profile', view=session.username) }}">back to my profile</a></p>
+    {% endif %}
+  {% else %}
+    <h1>Welcome, {{ user.full_name or user.username }}</h1>
+  {% endif %}
+
+  <div class="card" style="max-width: 520px;">
+    <p><strong>Username:</strong> <code>{{ user.username }}</code></p>
+    <p><strong>Full name:</strong> {{ user.full_name or '' }}</p>
+    <p><strong>Registry No:</strong> <code>{{ user.registry_no }}</code></p>
+    <p><strong>Lab results on file:</strong> {{ result_count }}</p>
+    {% if user.dev_token %}
+      <p><strong>Role:</strong> <code>system-admin</code></p>
+      <p><strong>Audit Key:</strong> <code>{{ user.dev_token }}</code></p>
+    {% endif %}
+  </div>
+
+  {% if not viewed_other %}
+    <h2>Your lab results</h2>
+    {% if results %}
+      <table class="grid">
+        <thead><tr><th>Date</th><th>Test</th><th>Value</th><th>Report</th></tr></thead>
+        <tbody>
+          {% for r in results %}
+            <tr>
+              <td>{{ r.taken_at }}</td>
+              <td>{{ r.test_name or r.test_code }}</td>
+              <td>{{ r.value }} {{ r.unit }}</td>
+              <td><a href="{{ url_for('report', patient_id=r.patient_id, result_id=r.id) }}">PDF</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted">No lab results assigned to your account yet.</p>
+    {% endif %}
+
+    <h2>Lab lookup tool</h2>
+    <p>Quickly check whether any patient has a result for a given test code. Returns a printable PDF receipt.</p>
+    <form action="{{ url_for('labcheck') }}" method="get" class="inline">
+      <input name="test_code" placeholder="e.g. GLU" value="GLU">
+      <button type="submit" class="btn">Check (PDF)</button>
+    </form>
+
+    <h2>Available test codes</h2>
+    <p class="muted">For reference when using the lookup tool above.</p>
+    <ul class="codechips">
+      <li><code>GLU</code> Glucose</li>
+      <li><code>HGB</code> Hemoglobin</li>
+      <li><code>CHL</code> Cholesterol</li>
+      <li><code>TSH</code> Thyroid Stimulating Hormone</li>
+      <li><code>CRE</code> Creatinine</li>
+      <li><code>WBC</code> White Blood Cell Count</li>
+    </ul>
+
+    <h2>Update display name</h2>
+    <form method="post" class="card" style="max-width: 480px;">
+      <label>Full name
+        <input name="full_name" value="{{ user.full_name or '' }}">
+      </label>
+      <button type="submit" class="btn">Save</button>
+    </form>
+  {% endif %}
+{% endblock %}

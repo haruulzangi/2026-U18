@@ -1,0 +1,27 @@
+name: AI create AI solve
+category: misc
+description: |
+  Claude says the door key lives on image.
+
+  Beyond that — read the binary. Some of what you find inside is real.
+  Most of it isn't.
+
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/gauntlet
+  - challenge/skribbl_all.png
+
+flags:
+  - type: static
+    content: HZU18{p4l4d1n_def3nd3d_v5_silicon_2026_6961893d2561f4a6}
+
+tags:
+  - reversing
+
+state: hidden

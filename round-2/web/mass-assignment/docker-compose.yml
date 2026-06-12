@@ -1,0 +1,31 @@
+services:
+  mass-assignment:
+    image: ghcr.io/haruulzangi/2026-u18-private/mass-assignment:latest
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      FLAG: HZU18{m4ss_4ss1gnm3nt_1s_d4ng3r0us}
+    tmpfs:
+      - /tmp/uploads:size=32m,mode=1777
+    mem_limit: 128m
+    cpus: 0.5
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.mass-assignment-http.entrypoints=web
+      - traefik.http.routers.mass-assignment-http.rule=Host(`mass-assignment.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.mass-assignment-http.middlewares=mass-assignment-https
+      - traefik.http.middlewares.mass-assignment-https.redirectscheme.scheme=https
+      - traefik.http.routers.mass-assignment.entrypoints=websecure
+      - traefik.http.routers.mass-assignment.rule=Host(`mass-assignment.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.mass-assignment.tls=true
+      - traefik.http.routers.mass-assignment.tls.certresolver=myresolver
+      - traefik.http.services.mass-assignment.loadbalancer.server.port=3000
+
+networks:
+  traefik_proxy:
+    external: true

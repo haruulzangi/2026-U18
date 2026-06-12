@@ -1,0 +1,28 @@
+name: qword challenge
+author: ganbold13
+category: pwn
+connection_info: "ncat --ssl qword.u18-2026.haruulzangi.mn 1337"
+description: |
+  ```
+    .:: q w o r d ::.
+  eight bytes lie between you and the void.
+  speak a word; it shall be returned to you.
+  ```
+
+  Reshape any qword of its body before it speaks. Whisper a word, and
+  what returns to you may not be what you spoke.
+type: dynamic
+
+files:
+  - dist/qword.tar.gz
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{Is_qw0rd_t00_Much?}
+
+state: hidden

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Морьтой geng</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%87%3C/text%3E%3C/svg%3E">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{overflow:hidden;background:#0c0818;font-family:'Courier New',Consolas,monospace;color:#e0e0e0}
+  canvas{display:block}
+
+  /* HUD */
+  #hud{position:fixed;top:18px;right:18px;z-index:100;
+    background:rgba(10,10,20,0.82);color:#e0e0e0;
+    padding:14px 18px;border-radius:12px;border:1px solid rgba(255,200,80,0.28);
+    backdrop-filter:blur(12px);min-width:260px}
+  #hud .title{font-size:16px;font-weight:700;color:#ffd700;letter-spacing:3px;
+    margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,200,80,0.2);
+    text-shadow:0 0 12px rgba(255,200,80,0.4)}
+  #hud .stat{font-size:11.5px;margin:4px 0;color:#aaa}
+  #hud .stat span{color:#fff;font-weight:700;font-size:13px;margin-left:6px}
+  #hud .bar{height:7px;background:rgba(255,255,255,0.1);border-radius:4px;margin-top:4px;overflow:hidden}
+  #hud .bar-fill{height:100%;background:linear-gradient(90deg,#fa0,#ffd700);transition:width .4s}
+  #hud #winner{margin-top:8px;font-size:13px;letter-spacing:1.5px;color:#bbb;min-height:16px}
+
+  /* Leaderboard */
+  #lb-panel{position:fixed;top:210px;right:18px;z-index:100;width:260px;
+    background:rgba(10,10,20,0.82);padding:12px 14px;border-radius:10px;
+    border:1px solid rgba(200,200,255,0.18);backdrop-filter:blur(10px)}
+  #lb-title{font-size:11px;letter-spacing:3px;color:#aaa;margin-bottom:8px;
+    padding-bottom:6px;border-bottom:1px solid rgba(200,200,255,0.12)}
+  .lb-row{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:11px}
+  .lb-row.me .lb-name{color:#ffd700;font-weight:700}
+  .lb-name{width:60px;color:#ccc}
+  .lb-bar{flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden}
+  .lb-bar span{display:block;height:100%;background:linear-gradient(90deg,#6ad,#8fe)}
+  .lb-row.me .lb-bar span{background:linear-gradient(90deg,#fa0,#ffd700)}
+  .lb-pos{width:24px;text-align:right;color:#fff;font-weight:700}
+
+  /* Stack panel (format-string dest) */
+  #stack-panel{position:fixed;top:18px;bottom:108px;left:18px;z-index:100;width:400px;
+    display:flex;flex-direction:column;
+    background:rgba(5,8,12,0.88);padding:12px 14px;border-radius:8px;
+    border:1px solid rgba(200,160,80,0.28);backdrop-filter:blur(10px);
+    font-family:'Courier New',Consolas,monospace;font-size:12px;color:#cdb890}
+  #stack-panel .spt{font-size:11px;letter-spacing:2.5px;color:#d9b066;margin-bottom:8px;
+    padding-bottom:6px;border-bottom:1px solid rgba(200,160,80,0.18);
+    text-transform:uppercase;display:flex;justify-content:space-between;flex:0 0 auto}
+  #stack-panel .spt .sub{color:#666;letter-spacing:1px}
+  #stack-rows{display:flex;flex-direction:column;gap:2px;
+    overflow-y:auto;flex:1 1 auto;min-height:0;padding-right:4px;
+    scrollbar-width:thin;scrollbar-color:#8a6e3a transparent}
+  #stack-rows::-webkit-scrollbar{width:6px}
+  #stack-rows::-webkit-scrollbar-thumb{background:#8a6e3a;border-radius:3px}
+  #stack-rows::-webkit-scrollbar-track{background:transparent}
+  .srow{display:grid;grid-template-columns:40px 170px 1fr;gap:8px;
+    padding:3px 6px;border-radius:3px;align-items:center;
+    transition:background .3s,color .3s}
+  .srow .sslot{color:#7c6a4a;font-size:11px}
+  .srow .shex{color:#a9c4e0;font-size:12px;letter-spacing:0.3px}
+  .srow .shint{color:#6a6a70;font-size:10.5px;letter-spacing:0.5px}
+  .srow.str .shex{color:#dba0e0}
+  .srow.hit{background:rgba(255,180,40,0.20);box-shadow:inset 0 0 0 1px rgba(255,200,60,0.55);
+    animation:hitflash 1.6s ease-out}
+  .srow.hit .sslot{color:#ffd700;font-weight:700}
+  .srow.hit .shex{color:#ffe6a8}
+  .srow.hit .shint{color:#e8c078}
+  @keyframes hitflash{
+    0%{background:rgba(255,210,60,0.55)}
+    100%{background:rgba(255,180,40,0.20)}
+  }
+  .spf{font-size:9px;color:#555;letter-spacing:1.5px;margin-top:6px;
+    padding-top:4px;border-top:1px solid rgba(200,160,80,0.12);text-align:center}
+
+  /* Log */
+  #log-panel{position:fixed;bottom:108px;right:18px;z-index:100;width:420px;
+    background:rgba(5,8,12,0.85);color:#bce;padding:10px 12px;
+    border-radius:8px;border:1px solid rgba(120,200,255,0.16);
+    backdrop-filter:blur(10px);max-height:260px;font-size:10.5px;line-height:1.5}
+  #log-panel .lpt{color:#9bd;font-size:9.5px;letter-spacing:2px;margin-bottom:6px;
+    text-transform:uppercase;border-bottom:1px solid rgba(120,200,255,0.15);padding-bottom:4px}
+  #log{max-height:216px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#58a transparent;font-family:'Courier New',monospace}
+  #log::-webkit-scrollbar{width:4px}
+  #log::-webkit-scrollbar-thumb{background:#58a;border-radius:2px}
+  .log-line{margin:1.5px 0;white-space:pre-wrap;word-break:break-all}
+  .log-ok{color:#9ce}
+  .log-cheer{color:#ffd700}
+  .log-khan{color:#ffd700;font-weight:700}
+  .log-err{color:#e88}
+
+  /* Status */
+  #status{position:fixed;bottom:98px;left:50%;transform:translateX(-50%);z-index:150;
+    background:rgba(0,0,0,0.55);color:#666;padding:6px 18px;border-radius:16px;
+    font-size:10.5px;letter-spacing:1.5px}
+  #status.connected{color:#8e8}
+  #status.error{color:#e88}
+
+  /* Bottom control bar */
+  #bottom-bar{position:fixed;bottom:20px;left:18px;right:18px;z-index:200;
+    display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .btn{background:rgba(20,15,35,0.82);color:#ddd;
+    border:1px solid rgba(255,200,80,0.3);padding:9px 18px;border-radius:22px;cursor:pointer;
+    font-size:12px;font-family:'Courier New',Consolas,monospace;
+    backdrop-filter:blur(8px);transition:all .2s;letter-spacing:1.5px}
+  .btn:hover{color:#ffd700;border-color:rgba(255,200,80,0.78);
+    transform:translateY(-1px);box-shadow:0 4px 14px rgba(255,200,80,0.22)}
+  .input-group{display:flex;align-items:center;gap:0}
+  .input-group input{background:rgba(20,15,35,0.82);color:#ffd700;
+    border:1px solid rgba(255,200,80,0.3);border-right:none;
+    padding:9px 12px;border-top-left-radius:22px;border-bottom-left-radius:22px;
+    font-size:12px;font-family:inherit;outline:none}
+  .input-group input:focus{border-color:rgba(255,200,80,0.75)}
+  .input-group button{border-top-left-radius:0;border-bottom-left-radius:0;
+    border-color:rgba(255,200,80,0.3);color:#ffd700}
+  #name-input{width:150px}
+  #cheer-input{width:320px}
+  #btn-cheer{color:#f8c}
+  #btn-cheer:hover{color:#fdf;border-color:rgba(255,140,220,0.85);
+    box-shadow:0 4px 14px rgba(255,130,220,0.3)}
+
+  /* Flag modal */
+  #flag-display{position:fixed;top:50%;left:50%;
+    transform:translate(-50%,-50%) scale(0.8);z-index:300;
+    background:rgba(20,10,0,0.97);color:#ffd700;
+    padding:36px 56px;border-radius:14px;border:2px solid rgba(255,160,0,0.6);
+    font-size:18px;font-weight:700;letter-spacing:1.5px;
+    box-shadow:0 0 80px rgba(255,180,0,0.6),inset 0 0 40px rgba(255,200,80,0.15);
+    opacity:0;pointer-events:none;transition:all .6s ease-out;
+    text-align:center;font-family:'Courier New',monospace}
+  #flag-display.visible{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+  #flag-display .banner{font-size:13px;color:#ffa;letter-spacing:4px;margin-bottom:14px}
+  #flag-display .flag{font-size:20px;word-break:break-all}
+  #flag-display .subtitle{font-size:11px;color:#cca;letter-spacing:2px;margin-top:14px;font-weight:400}
+
+  /* Corner decoration */
+  #deco-tl,#deco-tr,#deco-bl,#deco-br{position:fixed;width:60px;height:60px;z-index:50;
+    color:rgba(255,200,80,0.3);font-size:28px;pointer-events:none;
+    display:flex;align-items:center;justify-content:center}
+  #deco-tl{top:6px;left:6px}#deco-tr{top:6px;right:6px}
+  #deco-bl{bottom:6px;left:6px}#deco-br{bottom:6px;right:6px}
+
+  .help-hint{position:fixed;bottom:126px;left:50%;transform:translateX(-50%);
+    color:#777;font-size:10px;letter-spacing:2px;text-align:center;z-index:140;max-width:80%}
+</style>
+</head>
+<body>
+
+<div id="deco-tl">❋</div>
+<div id="deco-tr">❋</div>
+<div id="deco-bl">❋</div>
+<div id="deco-br">❋</div>
+
+<div id="hud">
+  <div class="title">Морьтой geng</div>
+  <div class="stat">Морины нэр: <span id="hname">Хурдан-Хар</span></div>
+  <div class="stat">Эргэлт: <span id="round">0</span></div>
+  <div class="stat">Шагай: <span id="dice">·</span></div>
+  <div class="stat">Байрлал: <span id="ypos">0 / 24</span></div>
+  <div class="bar"><div id="bar-fill" class="bar-fill" style="width:0%"></div></div>
+  <div id="winner"></div>
+</div>
+
+<div id="lb-panel">
+  <div id="lb-title">ЛИДЕРБОРД</div>
+  <div id="lb"></div>
+</div>
+
+<div id="stack-panel">
+  <div class="spt"><span>STACK (CHEER DEST)</span><span class="sub">%1 → %N</span></div>
+  <div id="stack-rows"></div>
+</div>
+
+<div id="log-panel">
+  <div class="lpt">ЗАСУУЛЫН ДЭВТЭР</div>
+  <div id="log"></div>
+</div>
+
+<div id="status">ХОЛБОГДОЖ БАЙНА…</div>
+
+<div class="help-hint">ROLL шагайгаа хая · NAME &lt;нэр&gt; · CHEER &lt;ерөөл&gt; · TRACK</div>
+
+<div id="bottom-bar">
+  <button id="btn-roll" class="btn">🎲 ROLL</button>
+  <div class="input-group">
+    <input id="name-input" type="text" placeholder="морины нэр" autocomplete="off"/>
+    <button id="btn-name" class="btn">NAME</button>
+  </div>
+  <div class="input-group">
+    <input id="cheer-input" type="text" placeholder="CHEER · ерөөлөө хэл" autocomplete="off"/>
+    <button id="btn-cheer" class="btn">CHEER</button>
+  </div>
+  <button id="btn-track" class="btn">TRACK</button>
+</div>
+
+<div id="flag-display">
+  <div class="banner">◆ НААДМЫН ТҮРҮҮ ◆</div>
+  <div class="flag" id="flag-text"></div>
+  <div class="subtitle">Адууны жороо мэт хурдан, тэнгэр мэт өндөр</div>
+</div>
+
+<script src="three.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

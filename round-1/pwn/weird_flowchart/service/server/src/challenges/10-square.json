@@ -1,0 +1,29 @@
+{
+  "id": "square",
+  "title": "Square of N ",
+  "prompt": "Read an integer N from stdin with scanf, print N × N with printf.\n\n  stdin = \"3\"    →  \"9\\n\"\n  stdin = \"7\"    →  \"49\\n\"\n\nJudged against multiple inputs — hardcoding won't work.\n\n⚠ No format strings preloaded anywhere. Bring your own.",
+  "initState": {
+    "stdin": "3\n"
+  },
+  "expectedOutput": "9\n",
+  "testCases": [
+    { "stdin": "3\n",  "expectedOutput": "9\n"   },
+    { "stdin": "7\n",  "expectedOutput": "49\n"  },
+    { "stdin": "12\n", "expectedOutput": "144\n" },
+    { "stdin": "0\n",  "expectedOutput": "0\n"   },
+    { "stdin": "25\n", "expectedOutput": "625\n" }
+  ],
+  "flag": "HZU18{Gadg3ts_and_Calling_conv3nt10n}",
+  "stepBudget": 1500,
+  "allowedGadgets": [
+    "pop_rdi",
+    "pop_rsi",
+    "store_rdi_rsi",
+    "call_scanf",
+    "call_printf",
+    "load_rax_rdi",
+    "mov_rdi_rax",
+    "mov_rsi_rax",
+    "imul_rax_rdi"
+  ]
+}

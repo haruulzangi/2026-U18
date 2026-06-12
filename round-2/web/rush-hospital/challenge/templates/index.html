@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+  <section class="hero">
+    <h1>Rush Hospital Patient Portal</h1>
+    <p>
+      View your lab results, download reports, and look up tests by code.
+    </p>
+    <p>
+      <a class="btn" href="{{ url_for('register') }}">Register</a>
+      <a class="btn ghost" href="{{ url_for('login') }}">Login</a>
+    </p>
+  </section>
+{% endblock %}

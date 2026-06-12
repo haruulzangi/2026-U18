@@ -1,0 +1,29 @@
+name: My Vault
+category: forensic
+connection_info: https://my-vault.u18-2026.haruulzangi.mn
+
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: regex
+    content: '^HZU18\{[A-Za-z0-9_\-]{43}:my_v@u1t_1s_s3cur3\}$'
+topics:
+  - android
+  - crypto
+description: |
+  My grandfather left me a single phone and one rule: "Never lose this app. The
+  vault inside knows who you are, and it will only open for you."
+
+  I pressed the button. Nothing happened. No flag, no error, just a quiet little
+  app pretending to be empty. But I know there's something in there. I can feel
+  it whispering through the wires every time I tap that button.
+
+  Help me crack open my inheritance.
+files:
+  - files/MyVault.apk
+
+state: hidden

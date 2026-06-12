@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Old and Bleak — A Cipher Codex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="stamp">Est. MDCCCLII</div>
+      <div class="marque">☙ &nbsp;The Bureau of Lost Correspondence &nbsp;❧</div>
+      <div class="stamp right">Folio №&nbsp;<span id="folio">— —</span></div>
+    </header>
+
+    <main class="codex">
+      <section class="frontispiece">
+        <div class="rule rule-top" aria-hidden="true">
+          <span>◆</span><span>◆</span><span>◆</span>
+        </div>
+
+        <p class="eyebrow">A Treatise Upon Ciphers, Lately Discovered</p>
+
+        <h1 class="title">
+          <span class="line">Old</span>
+          <span class="amp">&amp;</span>
+          <span class="line">Bleak</span>
+        </h1>
+
+        <p class="byline">
+          <em>being</em> &nbsp;an Account of Sundry Messages &nbsp;<em>intercepted upon</em>&nbsp; the Wire,
+          &nbsp;<em>rendered</em>&nbsp; unto the Reader by means of an Antient &amp; Bleak Apparatus.
+        </p>
+
+        <div class="rule rule-bot" aria-hidden="true">
+          <span>✦</span>
+        </div>
+      </section>
+
+      <section class="columns">
+        <aside class="wheel-wrap" aria-hidden="true">
+          <svg class="wheel" viewBox="-110 -110 220 220">
+            <defs>
+              <path id="outerArc" d="M 0,-94 A 94,94 0 1,1 -0.01,-94" />
+              <path id="innerArc" d="M 0,-66 A 66,66 0 1,1 -0.01,-66" />
+            </defs>
+            <circle r="100" class="ring ring-out" />
+            <circle r="92" class="ring ring-thin" />
+            <circle r="70" class="ring ring-mid" />
+            <circle r="62" class="ring ring-thin" />
+            <circle r="32" class="ring ring-in" />
+            <circle r="4" class="pivot" />
+            <g class="tick-group">
+              <!-- 24 ticks generated -->
+            </g>
+            <text class="arc-text">
+              <textPath href="#outerArc" startOffset="0">
+                · TRANSMITTED · IN · GRAVE · CONFIDENCE · ANNO · DOMINI · MMXXVI ·
+              </textPath>
+            </text>
+            <text class="arc-text small">
+              <textPath href="#innerArc" startOffset="0">
+                A · B · C · D · E · F · G · H · I · J · K · L · M · N · O · P · Q · R · S · T · U · V · W · X · Y · Z ·
+              </textPath>
+            </text>
+            <g class="crosshair">
+              <line x1="-100" y1="0" x2="100" y2="0" />
+              <line x1="0" y1="-100" x2="0" y2="100" />
+            </g>
+          </svg>
+          <div class="wheel-label">
+            <span>fig. I.</span>
+            <em>the cipher wheel,<br />slowly turning.</em>
+          </div>
+        </aside>
+
+        <article class="manuscript">
+          <p class="drop">
+            <span class="dropcap">T</span>he apparatus, dear reader, is at present
+            <strong>restored &amp; attentive</strong>. Three dispatches may be solicited from its
+            brass and bakelite innards — the first, a publick key set in lead; the second,
+            a sealed missive; the third, a verification of one's own workings. Proceed
+            with the decorum befitting a message older than the wires that carry it.
+          </p>
+
+          <div class="endpoints">
+            <button class="endpoint" data-method="GET" data-path="/public-key">
+              <span class="num">i.</span>
+              <span class="method">GET</span>
+              <span class="path">/public-key</span>
+              <span class="hint">obtain the bureau's publick key</span>
+              <span class="arrow">→</span>
+            </button>
+
+            <button class="endpoint" data-method="GET" data-path="/get-flag">
+              <span class="num">ii.</span>
+              <span class="method">GET</span>
+              <span class="path">/get-flag</span>
+              <span class="hint">retrieve the sealed dispatch</span>
+              <span class="arrow">→</span>
+            </button>
+
+            <div class="endpoint post" data-method="POST" data-path="/check-flag">
+              <span class="num">iii.</span>
+              <span class="method">POST</span>
+              <span class="path">/check-flag</span>
+              <span class="hint">present the ciphertext for judgement</span>
+              <form id="verify-form">
+                <label for="verify-input">
+                  <span class="lbl">ciphertext</span>
+                </label>
+                <input
+                  id="verify-input"
+                  name="ciphertext"
+                  type="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="base64 ciphertext"
+                />
+                <button type="submit" class="send">
+                  <span>transmit</span>
+                  <span class="arrow">↗</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="dispatch" id="dispatch">
+        <header class="dispatch-head">
+          <span class="seal">⚜</span>
+          <span class="dispatch-title">Dispatch Log</span>
+          <span class="status" id="status">idle</span>
+        </header>
+        <pre class="tape" id="tape">  awaiting instruction —
+  the wire is still.
+  press an endpoint above to rouse the apparatus.</pre>
+      </section>
+
+      <footer class="colophon">
+        <div class="colo-rule">❦ &nbsp; ❦ &nbsp; ❦</div>
+        <p>
+          Printed &amp; bound in the dark at the Bureau's private press.
+          &nbsp;·&nbsp; Set in <em>IM Fell English</em> &amp; <em>Cormorant Garamond</em>.
+          &nbsp;·&nbsp; The type is wood; the cipher is cold.
+        </p>
+      </footer>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

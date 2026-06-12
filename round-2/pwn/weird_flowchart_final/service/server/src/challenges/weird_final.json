@@ -1,0 +1,16 @@
+{
+  "id": "weird_final",
+  "title": "All-in-One",
+  "prompt": "Print exactly:\n\n  pwned\n\nThis is the last one of the weird ser13s.\n\nHave you tr13d harder?\n\n",
+  "initState": {
+    "registers": {
+      "r13": "0x403000"
+    }
+  },
+  "expectedOutput": "pwned\n",
+  "flag": "HZU18{r13_w4s_a_g1ft_4ll_4l0ng}",
+  "stepBudget": 1000,
+  "maxBlocks": 3,
+  "kidStdin": true,
+  "blacklistedBytes": [112, 119, 110, 101, 100, 16]
+}

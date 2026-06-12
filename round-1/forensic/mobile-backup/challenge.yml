@@ -1,0 +1,28 @@
+name: Mobile Backup
+author: '[ByamB4](https://github.com/ByamB4)'
+category: forensic
+description: |
+  Bat-Erdene handed you a partial extraction from his Android phone after forgetting how he locked a private note in a vault app.
+
+  Recover the original note from the extracted data.
+
+  Flag format: `HZU18{...}`
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/phone_backup.zip
+
+flags:
+  - type: static
+    content: HZU18{was_it_easy?_a1e825e071757c594a1fd954dd9b2686}
+
+tags:
+  - medium
+  - android
+  - sqlite
+  - crypto

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1>Dashboard</h1>
+  <div class="greeting">Hello {{ user.fullname }}!</div>
+
+  <div class="info-box">
+    Welcome to your secure dashboard. Your session is protected with
+    HttpOnly cookies and strict SameSite policy.
+  </div>
+
+  <div class="link">
+    <a href="/profile">Update Profile</a>
+  </div>
+
+  <form method="POST" action="/logout" style="margin-top: 24px;">
+    <button type="submit" class="btn btn-danger">Logout</button>
+  </form>
+{% endblock %}

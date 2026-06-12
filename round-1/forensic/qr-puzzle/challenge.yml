@@ -1,0 +1,23 @@
+name: QR Puzzle
+author: "[ByamB4](https://github.com/ByamB4)"
+category: forensic
+description: |
+  Flag format: `HZU18{...}`
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/qr_puzzle.zip
+
+flags:
+  - type: static
+    content: HZU18{mongol_qr_gist_trap_68f8c4161983fb5fce71938a200529da}
+
+tags:
+  - medium
+  - qr
+  - osint
+  - puzzle

@@ -1,0 +1,29 @@
+services:
+  ssti-js:
+    image: ghcr.io/haruulzangi/2026-u18-private/ssti-js:latest
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 128m
+    cpus: 0.5
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.ssti-js-http.entrypoints=web
+      - traefik.http.routers.ssti-js-http.rule=Host(`ssti-js.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.ssti-js-http.middlewares=ssti-js-https
+      - traefik.http.middlewares.ssti-js-https.redirectscheme.scheme=https
+      - traefik.http.routers.ssti-js.entrypoints=websecure
+      - traefik.http.routers.ssti-js.rule=Host(`ssti-js.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.ssti-js.loadbalancer.server.port=3000
+      - traefik.http.routers.ssti-js.tls=true
+      - traefik.http.routers.ssti-js.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

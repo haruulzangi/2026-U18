@@ -1,0 +1,7 @@
+{
+  "service": "CloudDrive",
+  "version": "1.0.0",
+  "environment": "production",
+  "database": "postgresql://db.internal:5432/cloud",
+  "features": ["upload", "download", "share"]
+}

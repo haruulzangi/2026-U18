@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Rush Hospital{% endblock %}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="pattern-strip" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28">
+          <circle cx="16" cy="16" r="15" fill="#0d4a6b"/>
+          <path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>Rush Hospital</strong>
+        <small>Patient Portal</small>
+      </span>
+    </a>
+    <nav>
+      {% if session.user_id %}
+        <a href="{{ url_for('profile', view=session.username) }}" class="user-pill">
+          <span class="dot"></span>{{ session.username }}
+        </a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a class="ghost" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('about') }}">About</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, m in messages %}
+          <ul class="flash flash-{{ category or 'error' }}"><li>{{ m }}</li></ul>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <span><strong>Rush Hospital</strong> | Patient Portal v0.4-dev</span>
+      <span class="muted">+976-11-555-0100 | open 07:00-19:00</span>
+    </div>
+  </footer>
+</body>
+</html>

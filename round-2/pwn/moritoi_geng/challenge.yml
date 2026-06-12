@@ -1,0 +1,21 @@
+name: Moritoi geng
+author: '[Tulgaaaa](https://github.com/Tulgaaaaaaaa)'
+category: pwn
+connection_info: https://moritoi-geng.u18-2026.haruulzangi.mn
+description: |
+  Нэг ийм морь уралддаг тоглоом оллоо гэхдээ format нь нэг л сонин юм аа ??
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{mori_uraldahch_saihanda_7f2d1e83}
+
+tags:
+  - easy
+
+state: hidden

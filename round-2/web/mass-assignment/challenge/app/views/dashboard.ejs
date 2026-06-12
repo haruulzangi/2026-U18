@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Enterprise Employee Portal</h1>
+            <p>Welcome to your secure dashboard</p>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/profile">Profile</a>
+                <% if (user.isAdmin) { %>
+                <a href="/admin" id="adminLink">Admin Panel</a>
+                <% } %>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <%= user.username.charAt(0).toUpperCase() %>
+                </div>
+                <span><%= user.username %></span>
+                <span class="badge <%= user.isAdmin ? 'badge-admin' : 'badge-user' %>">
+                    <%= user.isAdmin ? 'Administrator' : 'Employee' %>
+                </span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div id="alert" class="alert alert-success"></div>
+            
+            <div class="profile-card">
+                <h3 style="margin-bottom: 20px; color: #667eea;">📋 Profile Information</h3>
+                <p><strong>Username:</strong> <span><%= user.username %></span></p>
+                <p><strong>Email:</strong> <span id="email"><%= user.email || 'Not set' %></span></p>
+                <p><strong>Department:</strong> <span id="dept"><%= user.department || 'Not assigned' %></span></p>
+                <p><strong>Role:</strong> <span id="role"><%= user.role || 'user' %></span></p>
+                <p><strong>Theme Preference:</strong> <span id="theme"><%= user.preferences ? user.preferences.theme : 'light' %></span></p>
+                <p><strong>Profile Views:</strong> <span><%= user.profileViews || 0 %></span></p>
+            </div>
+            
+            <div class="edit-section">
+                <h3>✏️ Edit Profile</h3>
+                <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                    Update your contact information
+                </p>
+                <input type="text" id="emailInput" placeholder="Email Address" value="<%= user.email || '' %>">
+                <input type="text" id="deptInput" placeholder="Department" value="<%= user.department || '' %>">
+                
+                <!-- Hidden field for developers only - DO NOT UNCOMMENT IN PRODUCTION -->
+                <!-- <input type="hidden" id="isAdminInput" value="true"> -->
+                
+                <button onclick="updateProfile()">💾 Save Changes</button>
+            </div>
+            
+            <div class="info-box">
+                <p>🔒 <strong>Security Notice:</strong> This portal uses role-based access control. Contact IT for permission changes.</p>
+                <p>💡 <strong>Tip:</strong> Your session expires after 30 minutes of inactivity.</p>
+            </div>
+            
+            <button onclick="logout()" class="btn-danger" style="width: 100%;">🚪 Logout</button>
+        </div>
+    </div>
+    
+    <script>
+        async function updateProfile() {
+            const email = document.getElementById('emailInput').value;
+            const department = document.getElementById('deptInput').value;
+            
+            const data = {
+                email: email,
+                department: department
+            };
+            
+            try {
+                const res = await fetch('/profile/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await res.json();
+                
+                if (result.success) {
+                    showAlert('Profile updated successfully!', 'success');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert('Error updating profile: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function logout() {
+            await fetch('/auth/logout');
+            window.location.href = '/';
+        }
+        
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert alert-${type === 'success' ? 'success' : 'error'}`;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+        
+        window.debugAPI = {
+        };
+    </script>
+</body>
+</html>

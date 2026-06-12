@@ -1,0 +1,22 @@
+name: Rush Hospital
+author: '[ByamB4](https://github.com/ByamB4)'
+category: web
+connection_info: https://rush-hospital.u18-2026.haruulzangi.mn
+description: ""
+attribution: Authored by [ByamB4](https://github.com/ByamB4)
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 6
+  minimum: 100
+
+flags:
+  - HZU18{bl1nd_sqli_p4tient_pdf_22ceb71846f72425750b1a36bdb102cb}
+
+tags:
+  - web
+  - sqli
+  - hard
+
+state: hidden

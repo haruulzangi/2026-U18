@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+  <h1>Create Account</h1>
+  <p class="subtitle">Join us to get started</p>
+
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="/signup">
+    <div class="form-group">
+      <label for="firstname">First Name</label>
+      <input type="text" id="firstname" name="firstname" required autocomplete="given-name">
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last Name</label>
+      <input type="text" id="lastname" name="lastname" required autocomplete="family-name">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required minlength="8" autocomplete="new-password">
+    </div>
+    <div class="form-group">
+      <label for="confirm_password">Confirm Password</label>
+      <input type="password" id="confirm_password" name="confirm_password" required minlength="8" autocomplete="new-password">
+    </div>
+    <button type="submit" class="btn">Sign Up</button>
+  </form>
+  <div class="link">
+    Already have an account? <a href="/signin">Sign in</a>
+  </div>
+{% endblock %}

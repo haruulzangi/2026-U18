@@ -1,0 +1,25 @@
+{
+  "id": "hello_world_noconst",
+  "title": "Hello World! ",
+  "prompt": "Print exactly:\n\n  Hello World!\n\n⚠ The characters of the output are BANNED in every value block you place — the check looks at all 8 bytes of each imm value.\n\nFigure it out.",
+  "initState": {},
+  "expectedOutput": "Hello World!\n",
+  "flag": "HZU18{w3lc0m3_t0_y0ur_F1rst_We1rd_programm1ng}",
+  "stepBudget": 3000,
+  "allowedGadgets": [
+    "pop_rax",
+    "pop_rdi",
+    "pop_rsi",
+    "add_rax_rdi",
+    "sub_rax_rdi",
+    "xor_rax_rdi",
+    "imul_rax_rdi",
+    "mov_rsi_rax",
+    "mov_rax_rdi",
+    "mov_rdi_rax",
+    "store_rdi_rsi",
+    "store_byte_rdi_sil",
+    "call_puts"
+  ],
+  "blacklistedBytes": [32, 33, 72, 87, 100, 101, 108, 111, 114]
+}

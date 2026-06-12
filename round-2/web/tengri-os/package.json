@@ -1,0 +1,15 @@
+{
+  "name": "tengri-os-desktop",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "express": "^4.21.0",
+    "javascript-obfuscator": "^4.2.2",
+    "puppeteer": "^24.0.0"
+  }
+}

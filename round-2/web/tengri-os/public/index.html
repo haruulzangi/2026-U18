@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ТЭНГЭР OS</title>
+<link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+
+<div id="boot">
+  <div id="boot-inner">
+    <div id="boot-logo">🏔</div>
+    <div id="boot-title">ТЭНГЭР OS</div>
+    <div id="boot-sub">Mongolian National Intelligence System</div>
+    <div id="boot-bar"><div id="boot-fill"></div></div>
+    <div id="boot-status">Initializing...</div>
+  </div>
+</div>
+
+<div id="desktop" class="hidden">
+  <div class="icons">
+    <div class="icon" data-app="browser">
+      <div class="icon-img">🌐</div>
+      <div class="icon-label">Khan Browser</div>
+    </div>
+    <div class="icon" data-app="webhook">
+      <div class="icon-img">📡</div>
+      <div class="icon-label">Webhook</div>
+    </div>
+    <div class="icon" data-app="notes">
+      <div class="icon-img">📝</div>
+      <div class="icon-label">Notes</div>
+    </div>
+    <div class="icon" data-app="help">
+      <div class="icon-img">❓</div>
+      <div class="icon-label">Challenge Info</div>
+    </div>
+  </div>
+  <div id="windows"></div>
+</div>
+
+<div id="taskbar" class="hidden">
+  <div id="tb-start">🏔 ТЭНГЭР</div>
+  <div id="tb-apps"></div>
+  <div id="tb-right">
+    <span id="tb-session"></span>
+    <span id="tb-clock"></span>
+  </div>
+</div>
+
+<script src="desktop.min.js"></script>
+</body>
+</html>

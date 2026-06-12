@@ -1,0 +1,32 @@
+services:
+  old-and-bleak:
+    image: ghcr.io/haruulzangi/2026-u18-private/old-and-bleak:latest
+    networks: [traefik_proxy]
+    restart: always
+    environment:
+      FLAG_TEMPLATE: ${FLAG_TEMPLATE:-HZU18{0ld_$1_4nd_bl34k_$2}}
+      KEY_PATH: ${KEY_PATH:-/tmp/keys}
+      RSA_KEY_BITS: ${RSA_KEY_BITS:-512}
+      GODEBUG: rsa1024min=0
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 64m
+    cpus: 0.25
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.old-and-bleak-http.entrypoints=web
+      - traefik.http.routers.old-and-bleak-http.rule=Host(`old-and-bleak.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.old-and-bleak-http.middlewares=old-and-bleak-https
+      - traefik.http.middlewares.old-and-bleak-https.redirectscheme.scheme=https
+      - traefik.http.routers.old-and-bleak.entrypoints=websecure
+      - traefik.http.routers.old-and-bleak.rule=Host(`old-and-bleak.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.old-and-bleak.loadbalancer.server.port=3000
+      - traefik.http.routers.old-and-bleak.tls=true
+      - traefik.http.routers.old-and-bleak.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

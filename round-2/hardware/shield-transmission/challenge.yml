@@ -1,0 +1,30 @@
+name: Shield Transmission
+category: hardware
+
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: regex
+    content: '^HZU18\{[A-Za-z0-9_\-]{11}:S\.H\.1\.3\.L\.D_tr@nsm1ss10n_suCC3ssfu1:[A-Za-z0-9_\-]{11}\}$'
+topics:
+  - bluetooth
+  - ble
+description: |
+  During a sweep of an abandoned S.H.I.E.L.D. safehouse, agents recovered a small
+  field relay still broadcasting on low-energy radio. The device identifies itself
+  as `Shield-XMIT`, but its behavior does not match any standard S.H.I.E.L.D.
+  equipment profile.
+
+  Early analysis suggests the relay was modified after the fall of S.H.I.E.L.D.,
+  possibly by a HYDRA cell using old agency hardware to move short-range dead-drop
+  messages without touching the wider network.
+
+  The beacon is quiet unless contacted correctly. Locate the BLE device, learn how
+  it expects to be spoken to, and recover the hidden transmission before the relay
+  wipes its message.
+
+state: hidden

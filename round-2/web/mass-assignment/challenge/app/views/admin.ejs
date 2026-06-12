@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - Employee Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👑 Administrator Panel</h1>
+            <p>System Administration Console</p>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/profile">Profile</a>
+                <a href="/admin" style="font-weight: bold; color: #764ba2;">Admin Panel</a>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <%= user.username.charAt(0).toUpperCase() %>
+                </div>
+                <span><%= user.username %></span>
+                <span class="badge badge-admin">Administrator</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="admin-panel">
+                <h3>🏆 System Flag</h3>
+                <pre><%= flag %></pre>
+                <button onclick="copyFlag()" class="btn-primary">📋 Copy Flag</button>
+            </div>
+            
+            <div class="admin-panel">
+                <h3>👥 User Management</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left; padding: 10px; background: #667eea; color: white;">Username</th>
+                            <th style="text-align: left; padding: 10px; background: #667eea; color: white;">Email</th>
+                            <th style="text-align: left; padding: 10px; background: #667eea; color: white;">Department</th>
+                            <th style="text-align: left; padding: 10px; background: #667eea; color: white;">Role</th>
+                            <th style="text-align: left; padding: 10px; background: #667eea; color: white;">Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(function(u) { %>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 10px;"><%= u.username %></td>
+                            <td style="padding: 10px;"><%= u.email || '-' %></td>
+                            <td style="padding: 10px;"><%= u.department || '-' %></td>
+                            <td style="padding: 10px;"><%= u.role || 'user' %></td>
+                            <td style="padding: 10px;"><%= u.isAdmin ? '✅ Yes' : '❌ No' %></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="info-box">
+                <p>🔐 <strong>Security Note:</strong> All admin actions are logged.</p>
+                <p>📊 <strong>System Status:</strong> All systems operational</p>
+                <p>🕐 <strong>Server Time:</strong> <%= new Date().toLocaleString() %></p>
+            </div>
+            
+            <button onclick="logout()" class="btn-danger" style="width: 100%;">🚪 Logout</button>
+        </div>
+    </div>
+    
+    <script>
+        function copyFlag() {
+            const flag = document.querySelector('.admin-panel pre').textContent;
+            navigator.clipboard.writeText(flag);
+            alert('Flag copied to clipboard!');
+        }
+        
+        async function logout() {
+            await fetch('/auth/logout');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

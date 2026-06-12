@@ -1,0 +1,30 @@
+name: Krakoan Frequencies
+category: hardware
+
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: regex
+    content: '^HZU18\{[A-Za-z0-9_\-]{11}:wp@_h@ndsh@k3_cr@cked_by_squ1rr3l_g1rl:[A-Za-z0-9_\-]{11}\}$'
+topics:
+  - wifi
+  - wpa2
+  - wireless
+description: |
+  A hidden access point has been discovered near the ruins of Shin-Shibuya.
+  The network is broadcasting under the SSID Krakoa-Gateway, and intercepted
+  traffic suggests that a hostile group is using it to coordinate their next move.
+
+  Peni Parker's SP//dr suit managed to capture a WPA2 4-way handshake before the
+  signal disappeared. Your task is to crack the Wi-Fi password, decrypt the
+  captured traffic, and recover the operational callsign hidden inside.
+
+  Jeff the Land Shark overheard one useful clue before everything went quiet:
+
+  "The Wi-Fi password is exactly 8 digits."
+
+state: hidden

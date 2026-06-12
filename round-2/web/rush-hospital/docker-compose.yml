@@ -1,0 +1,30 @@
+services:
+  rush-hospital:
+    image: ghcr.io/haruulzangi/2026-u18-private/rush-hospital:latest
+    networks: [traefik_proxy]
+    restart: always
+    environment:
+      FLAG: ${FLAG:-HZU18{bl1nd_sqli_p4tient_pdf_22ceb71846f72425750b1a36bdb102cb}}
+      LAB_DEV_TOKEN: ${LAB_DEV_TOKEN:-kh-lab-internal-2026-7c4f}
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    mem_limit: 128m
+    cpus: 0.5
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.rush-hospital-http.entrypoints=web
+      - traefik.http.routers.rush-hospital-http.rule=Host(`rush-hospital.u18-2026.haruulzangi.mn`)
+      - traefik.http.routers.rush-hospital-http.middlewares=rush-hospital-https
+      - traefik.http.middlewares.rush-hospital-https.redirectscheme.scheme=https
+      - traefik.http.routers.rush-hospital.entrypoints=websecure
+      - traefik.http.routers.rush-hospital.rule=Host(`rush-hospital.u18-2026.haruulzangi.mn`)
+      - traefik.http.services.rush-hospital.loadbalancer.server.port=3000
+      - traefik.http.routers.rush-hospital.tls=true
+      - traefik.http.routers.rush-hospital.tls.certresolver=myresolver
+
+networks:
+  traefik_proxy:
+    external: true

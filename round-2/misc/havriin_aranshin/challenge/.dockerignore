@@ -1,0 +1,10 @@
+*.md
+.git
+.gitignore
+__pycache__
+*.pyc
+.DS_Store
+*.log
+*.bak
+Dockerfile
+.dockerignore

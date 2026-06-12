@@ -1,0 +1,18 @@
+name: "Weird FlowChart: All-in-One"
+author: ganbold13
+category: pwn
+connection_info: https://weird-flowchart.u18-2026.haruulzangi.mn
+description: |
+  This is the last one of the weird ser13s.
+  Have you tr13d harder?
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - HZU18{r13_w4s_a_g1ft_4ll_4l0ng}
+
+state: hidden

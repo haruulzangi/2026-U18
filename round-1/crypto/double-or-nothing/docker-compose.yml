@@ -1,0 +1,19 @@
+services:
+  double-or-nothing:
+    image: ghcr.io/haruulzangi/2026-u18-private/double-or-nothing:latest
+    container_name: double-or-nothing
+    networks: [traefik_tcp]
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.tcp.routers.double-or-nothing.rule=HostSNI(`*`)
+      - traefik.tcp.routers.double-or-nothing.entrypoints=tcp1337
+      - traefik.tcp.routers.double-or-nothing.tls=true
+      - traefik.tcp.routers.double-or-nothing.tls.certresolver=myresolver
+      - traefik.tcp.services.double-or-nothing.loadbalancer.server.port=1337
+    environment:
+      FLAG: 'HZU18{oN_RI6ht_pL4c3_on_R1Gh7_tIME}'
+
+networks:
+  traefik_tcp:
+    external: true

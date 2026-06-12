@@ -1,0 +1,15 @@
+# Local dev override. Overrides docker-compose.yml so the stack can be
+# brought up without the prod traefik_proxy network — exposes 1337
+# directly on the host instead.
+#
+# Production deploy ignores this file by passing -f docker-compose.yml
+# explicitly:    docker compose -f docker-compose.yml up -d
+# Local dev just runs:        docker compose up -d --build
+
+services:
+  qword:
+    image: qword-challenge:dev
+    networks: !reset []
+    ports:
+      - "1337:1337"
+    labels: !reset []

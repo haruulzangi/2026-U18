@@ -1,0 +1,20 @@
+name: Flexible Filter
+author: "[Ebo](https://github.com/Ebo)"
+category: web
+connection_info: https://flexible-filter.u18-2026.haruulzangi.mn
+description: ''
+attribution: Authored by [Ebo](https://github.com/enhbold)
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{0RM_1nj3ct10n_1s_4_f1lt3r3d_m4l1c10us_c0d3}
+
+tags:
+  - easy
+state: hidden

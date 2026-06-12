@@ -1,0 +1,15 @@
+name: "Weird FlowChart: isEquals"
+author: ganbold13
+category: pwn
+connection_info: https://weird-flowchart.u18-2026.haruulzangi.mn
+description: |
+  it is "isEquals" not "isNotEquals"
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - HZU18{str1ngs_ar3_w31rd_r1ght?}

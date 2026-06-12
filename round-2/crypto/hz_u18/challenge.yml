@@ -1,0 +1,15 @@
+name: 'HZ+U18'
+category: crypto
+description: ''
+files:
+  - challenge/challenge.py
+flags:
+  - type: static
+    content: 'HZU18{liNEar_rELaTiON_1s_dANgerous}'
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+state: hidden

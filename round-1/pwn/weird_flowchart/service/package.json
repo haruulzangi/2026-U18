@@ -1,0 +1,21 @@
+{
+  "name": "ctf-rop",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:server dev:client",
+    "dev:server": "npm -w server run dev",
+    "dev:client": "npm -w client run dev",
+    "build": "npm -w shared run build && npm -w server run build && npm -w client run build",
+    "typecheck": "npm -w shared run typecheck && npm -w server run typecheck && npm -w client run typecheck"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.3"
+  }
+}

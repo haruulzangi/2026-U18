@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Posts</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f5f7; margin: 0; padding: 40px; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 24px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border-radius: 10px; }
+        h1 { margin-top: 0; }
+        form { margin-bottom: 24px; }
+        input[type="text"] { width: calc(100% - 110px); padding: 10px 12px; border: 1px solid #ccd0d5; border-radius: 4px; }
+        button { padding: 11px 18px; border: none; background: #3b82f6; color: #fff; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #2563eb; }
+        .post { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #e5e7eb; }
+        .post:last-child { border-bottom: none; }
+        .post h2 { margin: 0 0 8px; }
+        .author { color: #6b7280; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Blog Posts</h1>
+        <form method="get">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="text" name="lookup" value="{{ lookup }}" placeholder="Lookup expression" style="flex:1; min-width:220px;">
+            <input type="text" name="value" value="{{ value }}" placeholder="Value" style="flex:1; min-width:220px;">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+    {% if match_count is not none %}
+        <div style="margin-bottom:16px; color:#111827; font-weight:600;">
+            {% if match_count > 0 %}
+                Match found: {{ match_count }} hidden post(s) matched.
+            {% else %}
+                No hidden post matched.
+            {% endif %}
+        </div>
+    {% endif %}
+    {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <p class="author">By {{ post.author }}</p>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

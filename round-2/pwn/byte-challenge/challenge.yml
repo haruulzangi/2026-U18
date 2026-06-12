@@ -1,0 +1,28 @@
+name: byte challenge
+author: ganbold13
+category: pwn
+connection_info: "ncat --ssl byte-challenge.u18-2026.haruulzangi.mn 1337"
+description: |
+  ```
+    .:: 1 b y t e ::.
+  ```
+
+  one byte. anywhere you like.
+  then the program runs.
+
+  it's just an echo. mostly.
+type: dynamic
+
+files:
+  - dist/byte-challenge.tar.gz
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{0n3_byt3_t0_ru13_th3m_4ll}
+
+state: hidden

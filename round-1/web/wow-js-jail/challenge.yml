@@ -1,0 +1,27 @@
+name: wow js jail
+author: flame
+category: web
+connection_info: https://wow-js-jail.u18-2026.haruulzangi.mn
+
+description: |
+  During your cybersecurity you will encounter tons of different sandboxes.
+  Learning to circumvent them may or may not bring you tons of money in future :)
+
+  This challenge was heavily inspired by [n8n](https://github.com/n8n-io/n8n).
+  Since this challenge is already hard, using AI agents is preferred. But don't forget to learn your lessons!
+attribution: Authored by [flame](https://github.com/zolbooo)
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/sandbox.ts
+flags:
+  - type: regex
+    content: ^HZU18{w0w_[A-Za-z\d\-_]+_you_w1n_[A-Za-z\d\-_]+}$
+
+tags:
+  - hard
+

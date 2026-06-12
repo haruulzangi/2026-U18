@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wow js jail</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.25rem; color: #58a6ff; }
+    .subtitle { font-size: 0.85rem; color: #8b949e; margin-bottom: 1.5rem; }
+    .editor {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    textarea {
+      width: 100%;
+      height: 160px;
+      background: #161b22;
+      color: #e6edf3;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      resize: vertical;
+      outline: none;
+    }
+    textarea:focus { border-color: #58a6ff; }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .counter { font-size: 0.75rem; color: #8b949e; }
+    .counter.warn { color: #f85149; }
+    button {
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.25rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    button:hover { background: #2ea043; }
+    button:disabled { background: #21262d; color: #8b949e; cursor: not-allowed; }
+    .output {
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 700px;
+    }
+    .output-box {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 3rem;
+    }
+    .output-box.ok { border-color: #238636; }
+    .output-box.err { border-color: #f85149; color: #f85149; }
+    .output-label { font-size: 0.75rem; color: #8b949e; margin-bottom: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>wow js jail</h1>
+  <p class="subtitle">escape the sandbox and capture the flag</p>
+  <div class="editor">
+    <textarea id="code" placeholder="// enter your JS here&#10;return 1 + 1" spellcheck="false" maxlength="200"></textarea>
+    <div class="meta">
+      <span class="counter" id="counter">0 / 200</span>
+      <button id="run">Run</button>
+    </div>
+  </div>
+  <div class="output" id="output" hidden>
+    <div class="output-label" id="output-label">result</div>
+    <div class="output-box" id="output-box"></div>
+  </div>
+
+  <script>
+    const codeEl = document.getElementById('code');
+    const counterEl = document.getElementById('counter');
+    const runBtn = document.getElementById('run');
+    const outputEl = document.getElementById('output');
+    const outputBox = document.getElementById('output-box');
+    const outputLabel = document.getElementById('output-label');
+
+    codeEl.addEventListener('input', () => {
+      const len = codeEl.value.length;
+      counterEl.textContent = `${len} / 200`;
+      counterEl.classList.toggle('warn', len > 180);
+    });
+
+    runBtn.addEventListener('click', async () => {
+      const code = codeEl.value;
+      runBtn.disabled = true;
+      runBtn.textContent = '...';
+      try {
+        const res = await fetch('/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
+        const data = await res.json();
+        outputEl.hidden = false;
+        if (data.status === 'ok') {
+          outputLabel.textContent = 'result';
+          outputBox.className = 'output-box ok';
+          outputBox.textContent = JSON.stringify(data.result, null, 2);
+        } else {
+          outputLabel.textContent = 'error';
+          outputBox.className = 'output-box err';
+          outputBox.textContent = data.message ?? data.error ?? 'unknown error';
+        }
+      } catch (e) {
+        outputEl.hidden = false;
+        outputLabel.textContent = 'error';
+        outputBox.className = 'output-box err';
+        outputBox.textContent = String(e);
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = 'Run';
+      }
+    });
+  </script>
+</body>
+</html>

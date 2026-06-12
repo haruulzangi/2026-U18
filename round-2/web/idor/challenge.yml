@@ -1,0 +1,21 @@
+name: IDOR
+author: "[Ebo](https://github.com/Ebo)"
+category: web
+connection_info: https://idor.u18-2026.haruulzangi.mn
+description: ''
+attribution: Authored by [Ebo](https://github.com/enhbold)
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{1d0r_1s_d4ng3r0us_4lw4ys_ch3ck_4uth}
+
+tags:
+  - web
+
+state: hidden

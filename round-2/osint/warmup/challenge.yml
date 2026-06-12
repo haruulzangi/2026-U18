@@ -1,0 +1,28 @@
+name: Git Never Forgets (Warmup)
+category: osint
+connection_info: https://github.com/dadadada665/mn-dict-cli
+
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+description: |
+  Нэгэн Junior хөгжүүлэгч англи хэл сурах зорилгоор жижиг толь бичгийн project эхлүүлж, GitHub дээр байршуулжээ. 
+  Гэвч тэр санамсаргүйгээр хувийн тохиргооны файлаа repository-д хамт оруулсан бөгөөд дараа нь устгасан байна.
+
+  Нуугдсан flag-г ол.
+
+flags:
+  - type: static
+    content: HZU18{commits_are_forever}
+
+topics:
+  - git
+  - osint
+  - github
+
+state: hidden
+tags:
+  - easy

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хаврын Араншин</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{overflow:hidden;background:#000;font-family:'Courier New',Consolas,monospace}
+  canvas{display:block}
+
+  #hud{position:fixed;top:20px;left:20px;z-index:100;
+    background:rgba(10,10,20,0.75);color:#e0e0e0;
+    padding:20px 24px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(12px);min-width:240px;transition:border-color .5s}
+  #hud.salhi{border-color:rgba(212,168,75,0.6)}
+  #hud.tsas{border-color:rgba(180,200,255,0.5)}
+  #hud.boroo{border-color:rgba(100,130,180,0.4)}
+  #hud.nar{border-color:rgba(255,220,100,0.5)}
+  #weather-icon{font-size:44px;margin-bottom:4px}
+  #weather-name{font-size:22px;font-weight:700;letter-spacing:3px;
+    margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.15)}
+  .stat{font-size:12px;color:#888;margin:4px 0}
+  .stat span{color:#ccc;font-weight:700}
+
+  #monitor{position:fixed;top:20px;right:20px;z-index:100;
+    background:rgba(5,10,15,0.85);color:#0f0;
+    padding:10px 12px;border-radius:8px;border:1px solid rgba(0,255,0,0.15);
+    backdrop-filter:blur(10px);width:400px;max-height:260px;font-size:9.5px;line-height:1.45;overflow:hidden}
+  #monitor-title{color:#0a0;font-size:9px;letter-spacing:2px;margin-bottom:6px;
+    text-transform:uppercase;border-bottom:1px solid rgba(0,255,0,0.15);padding-bottom:4px}
+  #monitor-log{max-height:220px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#0a0 transparent}
+  #monitor-log::-webkit-scrollbar{width:4px}
+  #monitor-log::-webkit-scrollbar-thumb{background:#0a0;border-radius:2px}
+  .log-line{margin:1px 0;white-space:pre-wrap;word-break:break-all;font-family:'Courier New',Consolas,monospace}
+  .log-nar{color:#FFD700}.log-boroo{color:#6688BB}
+  .log-salhi{color:#FF6B35}.log-tsas{color:#AAD4FF}
+  .log-hex{color:#0c0;opacity:0.6}.log-key{color:#F44;font-weight:700}
+
+  #bottom-bar{position:fixed;bottom:20px;left:20px;right:20px;z-index:200;
+    display:flex;justify-content:space-between;align-items:center}
+  #status{background:rgba(0,0,0,0.6);color:#555;padding:8px 20px;border-radius:20px;
+    font-size:11px;letter-spacing:1px;font-family:'Courier New',Consolas,monospace}
+  #status.connected{color:#4a4}
+  #status.error{color:#a44}
+
+  #history{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:3px;align-items:center}
+  .hist-dot{width:10px;height:10px;border-radius:50%;opacity:0.6;transition:all .3s}
+  .hist-dot:last-child{opacity:1;width:14px;height:14px}
+  .hist-nar{background:#FFD700}.hist-boroo{background:#4466AA}
+  .hist-salhi{background:#D4884B}.hist-tsas{background:#CCDDFF}
+
+  #music-btn{background:rgba(10,10,20,0.7);color:#888;border:1px solid rgba(255,255,255,0.15);
+    padding:8px 14px;border-radius:20px;cursor:pointer;font-size:11px;
+    font-family:'Courier New',Consolas,monospace;backdrop-filter:blur(8px);transition:all .3s}
+  #music-btn:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
+  #music-btn.playing{color:#6d6;border-color:rgba(100,200,100,0.3)}
+
+  #flag-btn{background:rgba(40,10,10,0.75);color:#F44;border:1px solid rgba(255,80,80,0.3);
+    padding:8px 14px;border-radius:20px;cursor:pointer;font-size:11px;
+    font-family:'Courier New',Consolas,monospace;backdrop-filter:blur(8px);transition:all .3s}
+  #flag-btn:hover{color:#FF8;border-color:rgba(255,200,80,0.6);background:rgba(60,30,10,0.85)}
+
+</style>
+</head>
+<body>
+
+<div id="hud">
+  <div id="weather-icon">--</div>
+  <div id="weather-name">ХОЛБОГДОЖ БАЙНА</div>
+  <div class="stat">Температур: <span id="temp">--</span></div>
+  <div class="stat">Салхины хурд: <span id="wind">--</span></div>
+  <div class="stat">Өөрчлөлт: <span id="tick">0</span></div>
+</div>
+
+<div id="history"></div>
+
+<div id="monitor">
+  <div id="monitor-title">PROTOCOL MONITOR</div>
+  <div id="monitor-log"></div>
+</div>
+
+<div id="bottom-bar">
+  <button id="music-btn" onclick="toggleMusic()">&#9835; Хөгжим</button>
+  <div id="status">ХОЛБОГДОЖ БАЙНА...</div>
+  <button id="flag-btn" onclick="requestFlag()">&#127937; Flag татах</button>
+</div>
+<audio id="bg-music" loop preload="auto">
+  <source src="aranshin-music.m4a" type="audio/mp4">
+</audio>
+
+<script src="three.min.js"></script>
+<script src="app.js"></script>
+<script>
+  const audio=document.getElementById('bg-music');
+  audio.volume=0.35;
+
+  function toggleMusic(){
+    const btn=document.getElementById('music-btn');
+    if(audio.paused){
+      const p=audio.play();
+      if(p&&p.catch){
+        p.then(()=>{
+          btn.classList.add('playing');
+          btn.innerHTML='\u266B \u0422\u043E\u0433\u043B\u043E\u0436 \u0431\u0430\u0439\u043D\u0430';
+        }).catch(e=>{
+          btn.innerHTML='\u266B \u0410\u043B\u0434\u0430\u0430: '+e.name;
+        });
+      }else{
+        btn.classList.add('playing');
+        btn.innerHTML='\u266B \u0422\u043E\u0433\u043B\u043E\u0436 \u0431\u0430\u0439\u043D\u0430';
+      }
+    }else{
+      audio.pause();
+      btn.classList.remove('playing');
+      btn.innerHTML='\u266B \u0425\u04E9\u0433\u0436\u0438\u043C';
+    }
+  }
+
+  audio.addEventListener('error',function(){
+    document.getElementById('music-btn').innerHTML='\u266B \u0424\u0430\u0439\u043B \u0430\u043B\u0434\u0430\u0430';
+  });
+</script>
+</body>
+</html>

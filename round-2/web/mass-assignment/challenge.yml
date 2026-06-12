@@ -1,0 +1,21 @@
+name: Mass Assignment
+author: "[Ebo](https://github.com/Ebo)"
+category: web
+connection_info: https://mass-assignment.u18-2026.haruulzangi.mn
+description: ''
+attribution: Authored by [Ebo](https://github.com/enhbold)
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+flags:
+  - type: static
+    content: HZU18{m4ss_4ss1gnm3nt_1s_d4ng3r0us}
+
+topics:
+  - web
+
+state: hidden

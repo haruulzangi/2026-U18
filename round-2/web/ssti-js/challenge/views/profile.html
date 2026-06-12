@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+  <h1>Update Profile</h1>
+  <p class="subtitle">Change your display name</p>
+
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+
+  {% if success %}
+    <div class="success">{{ success }}</div>
+  {% endif %}
+
+  {% if greeting %}
+    <div class="greeting">{{ greeting | safe }}</div>
+  {% endif %}
+
+  <form method="POST" action="/profile">
+    <div class="form-group">
+      <label for="fullname">Display Name</label>
+      <input type="text" id="fullname" name="fullname" value="{{ user.fullname }}" required autocomplete="name">
+      <small>Enter any name format. Max 300 characters.</small>
+    </div>
+    <button type="submit" class="btn">Update Profile</button>
+  </form>
+  <div class="link">
+    <a href="/home">Back to Dashboard</a>
+  </div>
+{% endblock %}

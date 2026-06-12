@@ -1,0 +1,22 @@
+name: Locked in Code
+author: '[Ebo](https://github.com/enhbold)'
+category: crypto
+description: 'can you find the flag?'
+type: dynamic
+
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+
+files:
+  - challenge/android-apk.apk
+
+flags:
+  - type: static
+    content: HZU18{h4dc0d3d_a3s_4ndr01d_fl4g}
+
+tags:
+  - crypto
+  - apk
+  - android

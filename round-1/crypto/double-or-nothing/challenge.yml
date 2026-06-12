@@ -1,0 +1,14 @@
+name: Double or Nothing
+category: crypto
+type: dynamic
+extra:
+  initial: 1000
+  decay: 10
+  minimum: 100
+description: ''
+files:
+  - challenge/challenge.py
+flags:
+  - type: static
+    content: 'HZU18{oN_RI6ht_pL4c3_on_R1Gh7_tIME}'
+connection_info: ncat --ssl double-or-nothing.u18-2026.haruulzangi.mn 1337

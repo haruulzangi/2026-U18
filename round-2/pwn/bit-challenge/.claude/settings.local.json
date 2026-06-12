@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(objdump -d /home/soctest/hz-u18_2026/byte-challenge/service/byte.dbg)",
+      "Bash(grep -P \"\\\\tc3\\\\s*$\")",
+      "Bash(awk '/^\\\\s*[0-9a-f]+:\\\\s+c3\\\\s*$/')",
+      "Bash(awk '/\tc3 *$/')",
+      "Bash(objdump -d /home/soctest/hz-u18_2026/byte-challenge/service/byte.dbg --no-show-raw-insn)",
+      "Bash(awk '/\tret\\\\s*$/ {print; n++; if\\(n>=5\\) exit}')",
+      "Bash(python3 *)",
+      "Bash(objdump -d --disassemble=__libc_system /home/soctest/hz-u18_2026/byte-challenge/service/byte.dbg)"
+    ]
+  }
+}
